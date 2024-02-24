@@ -1,1 +1,1 @@
-from validate_args import validate_args
+from goblib.general.decorators.validate_args import validate_args

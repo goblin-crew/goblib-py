@@ -2,7 +2,7 @@ from scapy.packet import Packet
 from scapy.layers import dot11 as d11
 from scapy.sendrecv import AsyncSniffer
 
-from .ProbeRequest import ProbeRequest
+from goblib.sec.net.wifi.proberequests.models import ProbeRequest
 from goblib.sec.net.wifi.proberequests.utils import WifiInterface
 
 from typing import Any, Self

@@ -1,4 +1,4 @@
-from ..goblib.sec.net.wifi import proberequests as PRQ
+from goblib.sec.net.wifi import proberequests as PRQ
 from dotenv import dotenv_values
 import time
 

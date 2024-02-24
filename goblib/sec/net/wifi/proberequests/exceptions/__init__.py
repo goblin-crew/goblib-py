@@ -1,1 +1,1 @@
-from .PacketTypeException import PacketTypeException
+from goblib.sec.net.wifi.proberequests.exceptions.PacketTypeException import PacketTypeException

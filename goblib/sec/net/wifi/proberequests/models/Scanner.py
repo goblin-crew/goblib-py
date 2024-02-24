@@ -42,7 +42,7 @@ class Scanner:
     def __set_started__(self) -> None:
         self.__started__ = True
 
-    @classmethod
+    
     def start(self) -> Self:
         if self.wifi_iface.in_managed_mode:
             self.wifi_iface.set_mode_monitor()
@@ -50,13 +50,13 @@ class Scanner:
         self.__sniffer__.start()
         return self
     
-    @classmethod
+
     def stop(self, join: bool = True) -> Self:
         self.__sniffer__.stop(join=join)
         self.wifi_iface.set_mode_managed()
         return self
     
-    @classmethod
+
     def await_join(self) -> Self:
         self.__sniffer__.join()
         self.wifi_iface.set_mode_managed()

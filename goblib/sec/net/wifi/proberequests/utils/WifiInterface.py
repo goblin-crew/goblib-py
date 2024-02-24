@@ -1,6 +1,6 @@
 import os
 import re as regex
-from typing import Any, Self
+from typing_extensions import Self
 import subprocess
 
 def shell(cmd: str):

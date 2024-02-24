@@ -5,7 +5,7 @@ from scapy.sendrecv import AsyncSniffer
 from goblib.sec.net.wifi.proberequests.models import ProbeRequest
 from goblib.sec.net.wifi.proberequests.utils import WifiInterface
 
-from typing import Any, Self
+from typing_extensions import Self
 
 class Scanner:
     '''

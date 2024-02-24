@@ -6,4 +6,5 @@ config = dotenv_values('.env')
 
 scanner = PRQ.Scanner(config['IFACE'])
 
+print("start scan")
 scanner.scan()

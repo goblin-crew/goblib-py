@@ -37,14 +37,13 @@ class Scanner:
         
 
     def __handle_packet__(self, pkt: Packet):
-        print(f"sniffed packet: {pkt.summary()}")
         if isinstance(pkt, Packet):
             if pkt.haslayer(d11.Dot11ProbeReq):
                 prq = ProbeRequest(pkt=pkt)
                 self.data += [prq]
 
                 if not self.quiet:
-                    print(f"({prq.ts_str})\t[{prq.mac}]\t{prq.ssid}")
+                    return f"({prq.ts_str})\t[{prq.mac}]\t{prq.ssid}"
     
     def scan(self) -> Self:
         if self.wifi_iface.in_managed_mode:
@@ -53,5 +52,5 @@ class Scanner:
         try:
             sniff(iface=self.__config__['iface'], count=self.__config__['count'], store=True, prn=self.__handle_packet__, monitor=True, quiet=self.__config__['quiet'])
         except KeyboardInterrupt:
-            pass
+            self.wifi_iface.set_mode_managed()
         return self

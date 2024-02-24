@@ -16,9 +16,12 @@ wifi_iface = WifiInterface("wlp0s20f3")
 wifi_iface.set_mode_monitor()
 
 try:
-    sniff(iface="wlp0s20f3", prn=probes_scanner,count=0)
+    #s = sniff(iface="wlp0s20f3", prn=probes_scanner, count=0)
+	s = sniff(prn=probes_scanner, count=0)
 except KeyboardInterrupt:
 	wifi_iface.set_mode_managed()
 
+wifi_iface.set_mode_managed()
 print(wifi_iface.in_managed_mode)
+print(s.summary())
 print(a)

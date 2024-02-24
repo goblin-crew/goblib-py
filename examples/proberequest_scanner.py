@@ -9,8 +9,16 @@ scanner = PRQ.Scanner(config['IFACE'])
 print("start scanner....")
 scanner.start()
 
+t = 0
+while not scanner.started:
+    print(f"\rwaiting for scanner start... ({t}s)", end='')
+    time.sleep(0.5)
+    t += 0.5
+
+print()
+
 for i in range(0, 120):
-    print(f"\rscanning ({i}s)", '')
+    print(f"\rscanning ({i}s)", end='')
     time.sleep(1)
 
 print()

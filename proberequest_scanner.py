@@ -1,19 +1,24 @@
-from goblib.sec.net.wifi import proberequests as PRQ
-from dotenv import dotenv_values
-import time
+from goblib.sec.net.wifi.proberequests.utils import WifiInterface
+from scapy.all import *
+import datetime
 
-config = dotenv_values('.env')
 
-scanner = PRQ.Scanner(config['IFACE'])
+a=[]
+# Opening a list to adjuest SSID
+def probes_scanner(packet):
+	if packet.haslayer(Dot11ProbeReq):
+		t=datetime.datetime.today()
+		a.append(packet.info)
+		print( ' ' + str(len(a))+'.' +'   '  +'['+ str(t)+']' + '  SSID: '+  packet.info+  '   ' 
+			+ ' BSSID: ' +packet.addr2)
 
-print("start scan")
+wifi_iface = WifiInterface("wlp0s20f3")
+wifi_iface.set_mode_monitor()
 
 try:
-    scanner.scan()
+    sniff(iface="wlp0s20f3", prn=probes_scanner,count=0)
 except KeyboardInterrupt:
-    scanner.wifi_iface.set_mode_managed()
+	wifi_iface.set_mode_managed()
 
-print("results")
-
-for i in scanner.data:
-    print(f"{i.mac}\t->\t{i.ssid}")
+print(wifi_iface.in_managed_mode)
+print(a)

@@ -43,7 +43,7 @@ class Scanner:
                 self.data += [prq]
 
                 if not self.quiet:
-                    return f"({prq.ts_str})\t[{prq.mac}]\t{prq.ssid}"
+                    return f"({prq.ts_str})\t[{prq.mac}]\t-->\t{prq.ssid}"
     
     def scan(self) -> Self:
         if self.wifi_iface.in_managed_mode:

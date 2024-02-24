@@ -3,6 +3,7 @@ from scapy.layers import dot11 as d11
 from scapy.sendrecv import AsyncSniffer
 
 from .ProbeRequest import ProbeRequest
+from goblib.sec.net.wifi.proberequests.utils import WifiInterface
 
 from typing import Any, Self
 
@@ -25,6 +26,7 @@ class Scanner:
     def __init__(self, iface: str, count: int = 0, quiet: bool = False, ignore_sniffer_errors: bool = False) -> None:
         self.data: list[ProbeRequest] = []
         self.quiet: bool = quiet
+        self.wifi_iface = WifiInterface(iface)
         self.__started__: bool = False
         self.__sniffer__: AsyncSniffer = AsyncSniffer(iface=iface, count=count, store=True, prn=self.__handle_packet__, monitor=True, quiet=ignore_sniffer_errors, started_callback=self.__set_started__)
 
@@ -42,17 +44,22 @@ class Scanner:
 
     @classmethod
     def start(self) -> Self:
+        if self.wifi_iface.in_managed_mode:
+            self.wifi_iface.set_mode_monitor()
+
         self.__sniffer__.start()
         return self
     
     @classmethod
     def stop(self, join: bool = True) -> Self:
         self.__sniffer__.stop(join=join)
+        self.wifi_iface.set_mode_managed()
         return self
     
     @classmethod
     def await_join(self) -> Self:
         self.__sniffer__.join()
+        self.wifi_iface.set_mode_managed()
         return self
     
     @property
